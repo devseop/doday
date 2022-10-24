@@ -9,7 +9,7 @@
 
 ## Tech Stack
 
-`React` `TypeScript` `Jotai` `Tailwind CSS`
+`React` `TypeScript` `Recoil` `Tailwind CSS`
 
 ## Commit Convention
 
