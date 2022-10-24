@@ -1,6 +1,6 @@
 import React from 'react';
 import Badge from './Badge';
-import { month, dayNum, year } from 'lib/date';
+import { month, dayNum } from 'lib/date';
 
 const CardInfo = () => {
   //todo 카드 생성시 선택된 날짜~
