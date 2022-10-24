@@ -13,11 +13,4 @@
 
 ## Commit Convention
 
-- `feat`: 새로운 기능의 추가
-- `fix`: 버그 수정
-- `docs`: 문서 수정
-- `style`: 코드의 변경이 없는 포맷팅
-- `refactor`: 코드 스팩토링
-- `test`: 테스트 코드, 리팩토링 테스트 코드 추가
-- `chore`: 빌드 업무 수정, 패키지 매니저 수정
-- `set`: 프로젝트 셋팅
+[Gitmoji](https://github.com/carloscuesta/gitmoji)를 사용하여 커밋의 목적이나 의도를 빠르게 식별할 수 있도록 했습니다.
