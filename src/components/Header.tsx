@@ -2,7 +2,7 @@ import React from 'react';
 import { day, today } from '../lib/date';
 import settingIcon from '../image/ic_setting.svg';
 
-const BottomNav = () => {
+const Header = () => {
   return (
     <div className="flex justify-between items-start">
       <div className="mb-5">
@@ -14,4 +14,4 @@ const BottomNav = () => {
   );
 };
 
-export default BottomNav;
+export default Header;

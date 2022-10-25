@@ -1,4 +1,3 @@
-import MainPage from 'pages/MainPage';
 import React from 'react';
 import Router from './router';
 import './App.css';
