@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import cameraIcon from '../image/ic_camera.svg';
+import Thumbnail from 'components/Thumbnail';
 import closeIcon from '../image/ic_close.svg';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { setDate, setTitle } from 'store/cardSlice';
 
 const AddNewCard = () => {
   const navigate = useNavigate();
@@ -9,10 +11,15 @@ const AddNewCard = () => {
     navigate('/');
   };
 
-  const fileInput = useRef<HTMLInputElement>(null);
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    fileInput.current?.click();
-  };
+  const dispatch = useAppDispatch();
+  const { title, date } = useAppSelector(state => state.card);
+
+  //date
+  const krDate = new Date().toLocaleString().slice(0, 14);
+  const krYear = krDate.slice(0, 4);
+  const krMonth = krDate.slice(6, 8);
+  const krDay = krDate.slice(10, 12);
+  const krToday = `${krYear}/${krMonth}/${krDay}`;
 
   return (
     <React.Fragment>
@@ -25,21 +32,23 @@ const AddNewCard = () => {
           <img src={closeIcon} alt="닫기" />
         </button>
       </div>
-      <form className="flex flex-col justify-between">
+      <form
+        className="flex flex-col justify-between"
+        encType="multipart/form-data"
+      >
         <div>
+          <Thumbnail />
           <div className="mb-6">
-            <p className="mb-[6px] font-semibold text-[14px]">Thumbnail</p>
-            <button
-              onClick={handleButtonClick}
-              className="w-[84px] h-[84px] mb-4 rounded-lg bg-ultraWhiteGray flex items-center justify-center"
-            >
-              <img src={cameraIcon} alt="사진" />
-            </button>
+            <p className="mb-[6px] font-semibold text-[14px]">
+              D-Day (Only input numbers)
+            </p>
             <input
-              ref={fileInput}
-              className="hidden"
-              type="file"
-              accept="image/jpeg, image/jpg, image/png"
+              className="w-full h-9 px-3 py-3 rounded-lg cursor-text border border-ultraWhiteGray"
+              placeholder={krToday}
+              value={date}
+              onChange={e => {
+                dispatch(setDate(e.target.value));
+              }}
             />
           </div>
           <div className="mb-6">
@@ -47,24 +56,11 @@ const AddNewCard = () => {
             <input
               className="w-full h-9 px-3 py-3 rounded-lg cursor-text border border-ultraWhiteGray"
               placeholder="Add New Event Title"
+              value={title}
+              onChange={e => {
+                dispatch(setTitle(e.target.value));
+              }}
             />
-          </div>
-          <div className="mb-6">
-            <p className="mb-[6px] font-semibold text-[14px]">D-Day</p>
-            <div className="flex gap-3">
-              <input
-                className="w-1/3 h-9 px-3 py-3 rounded-lg cursor-text border border-ultraWhiteGray"
-                placeholder="Year"
-              />
-              <input
-                className="w-1/3 h-9 px-3 py-3 rounded-lg cursor-text border border-ultraWhiteGray"
-                placeholder="Month"
-              />
-              <input
-                className="w-1/3 h-9 px-3 py-3 rounded-lg cursor-text border border-ultraWhiteGray"
-                placeholder="Day"
-              />
-            </div>
           </div>
         </div>
         <button
