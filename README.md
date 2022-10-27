@@ -9,7 +9,7 @@
 
 ## Tech Stack
 
-`React` `TypeScript` `Recoil` `Tailwind CSS`
+`React` `TypeScript` `Redux Toolkit` `Tailwind CSS`
 
 ## Commit Convention
 
