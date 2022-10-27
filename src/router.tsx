@@ -1,7 +1,6 @@
-import AddNewCard from 'pages/AddNewCard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import MainPage from './pages/MainPage';
+import AddNewCard from './pages/AddNewCard';
 
 function Router() {
   return (

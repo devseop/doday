@@ -17,10 +17,11 @@ const Thumbnail = () => {
       if (previewImgUrl) {
         //@ts-ignore
         setFileImage(previewImgUrl);
-        console.log(typeof previewImgUrl);
       }
     };
   };
+
+  // console.log(fileImage);
 
   return (
     <div className="mb-6">

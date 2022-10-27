@@ -14,7 +14,6 @@ const BottomNav = () => {
       <button className="w-[44px] h-[44px] flex items-center justify-center">
         <img src={listViewIcon} alt="전체보기" />
       </button>
-      <p className="w-9 text-center font-semibold text-lightGray">2/7</p>
       <button
         className="w-[44px] h-[44px] bg-black rounded-[22px] flex items-center justify-center"
         onClick={goToAddNewCard}
