@@ -1,5 +1,4 @@
 import React from 'react';
-import listViewIcon from '../image/ic_view_list.svg';
 import addCardIcon from '../image/ic_add.svg';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,10 +9,7 @@ const BottomNav = () => {
   };
 
   return (
-    <div className="flex justify-between items-center h-[88px]">
-      <button className="w-[44px] h-[44px] flex items-center justify-center">
-        <img src={listViewIcon} alt="전체보기" />
-      </button>
+    <nav className="flex justify-center items-center h-[88px] mt-6 mx-5">
       <button
         className="w-[44px] h-[44px] bg-black rounded-[22px] flex items-center justify-center"
         onClick={goToAddNewCard}
@@ -24,7 +20,7 @@ const BottomNav = () => {
           alt="카드 만들기"
         />
       </button>
-    </div>
+    </nav>
   );
 };
 

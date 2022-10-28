@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import Thumbnail from 'components/Thumbnail';
-import closeIcon from '../image/ic_close.svg';
 import { useAppDispatch } from 'hooks';
-import { addCard } from 'store/cardSlice';
+import { useNavigate } from 'react-router-dom';
+import { addTodo } from 'store/todoSlice';
 import checkIcon from '../image/ic_check.svg';
 import cameraIcon from '../image/ic_camera.svg';
+import TodosHeader from 'components/TodosHeader';
+import { krToday } from '../lib/date';
 
 const AddNewCard = () => {
+  const [title, setTitle] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [fileImage, setFileImage] = useState<any>('');
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const goToMain = () => {
     navigate('/');
   };
 
-  const dispatch = useAppDispatch();
-
-  const [title, setTitle] = useState<string>('');
-  const [date, setDate] = useState<string>('');
-  const [fileImage, setFileImage] = useState<any>('');
-
+  // upload and preview image
   const insertImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     let reader = new FileReader();
     //@ts-ignore
@@ -36,42 +36,28 @@ const AddNewCard = () => {
     };
   };
 
-  //date
-  const krDate = new Date().toLocaleString().slice(0, 14);
-  const krYear = krDate.slice(0, 4);
-  const krMonth = krDate.slice(6, 8);
-  const krDay = krDate.slice(10, 12);
-  const krToday = `${krYear}/${krMonth}/${krDay}`;
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
-      addCard({
-        cardId: date,
+      addTodo({
+        todoId: date,
         title,
         date,
-        thumbnail: fileImage,
       })
     );
 
     setTitle('');
     setDate('');
     setFileImage('');
+    alert('success');
+    goToMain();
   };
 
   return (
-    <React.Fragment>
-      <div className="flex justify-between items-start">
-        <div className="mb-6">
-          <p className="text-xxl font-bold leading-[34px]">Add</p>
-          <p className="text-xxl font-bold leading-[34px]">New Event</p>
-        </div>
-        <button onClick={goToMain}>
-          <img src={closeIcon} alt="닫기" />
-        </button>
-      </div>
+    <div className="h-screen">
+      <TodosHeader />
       <form
-        className="flex flex-col justify-between"
+        className="flex flex-col justify-between mx-5 mt-5"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
       >
@@ -135,7 +121,7 @@ const AddNewCard = () => {
           <span className="ml-2 text-4 text-white font-bold">Add Event</span>
         </button>
       </form>
-    </React.Fragment>
+    </div>
   );
 };
 

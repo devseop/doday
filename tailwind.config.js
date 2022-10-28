@@ -34,6 +34,7 @@ module.exports = {
         since: '#302F62',
         until: '#3BB272',
         d_day: '#E46666',
+        border: '#d9d9d9',
         lightGray: 'rgba(0, 0, 0, 0.4)',
         ultraWhiteGray: 'rgba(0, 0, 0, 0.1)',
       },

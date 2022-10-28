@@ -1,10 +1,29 @@
 import React from 'react';
+import { Todo } from 'store/todoSlice';
+import { krYear, krMonth, krDay } from 'lib/date';
 
-export default function Badge() {
-  //todo 만약에 디데이 전이라면 until / 디데이라면 d-day / 지났다면 since로 표시되어야 함
+const Badge = ({ todo }: { todo: Todo }) => {
+  const today = `${krYear}${krMonth}${krDay}`;
+  const todaysNumber = Number(today);
+  const todosNumber = Number(todo.date);
+
   return (
-    <span className="py-[3px] px-[5px] rounded-[4px] text-white bg-slate-400 text-[8px] leading-[10px]">
-      Until
-    </span>
+    <div className=" mb-[2px]">
+      {todaysNumber === todosNumber ? (
+        <span className="inline-block py-[4px] px-[6px] rounded-[4px] text-white bg-d_day text-[8px] leading-[10px]">
+          D-Day
+        </span>
+      ) : todaysNumber > todosNumber ? (
+        <span className="inline-block py-[4px] px-[6px] rounded-[4px] text-white bg-since text-[8px] leading-[10px]">
+          Since
+        </span>
+      ) : (
+        <span className="inline-block py-[4px] px-[6px] rounded-[4px] text-white bg-until text-[8px] leading-[10px]">
+          Until
+        </span>
+      )}
+    </div>
   );
-}
+};
+
+export default Badge;
