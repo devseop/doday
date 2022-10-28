@@ -7,7 +7,7 @@ import store from 'store';
 function App() {
   return (
     <Provider store={store}>
-      <div className="box-border bg-bg h-screen">
+      <div className="box-border bg-bg">
         <Router />
       </div>
     </Provider>

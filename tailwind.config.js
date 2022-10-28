@@ -36,6 +36,7 @@ module.exports = {
         d_day: '#E46666',
         border: '#d9d9d9',
         lightGray: 'rgba(0, 0, 0, 0.4)',
+        zero: 'rgba(0, 0, 0, 0.0)',
         ultraWhiteGray: 'rgba(0, 0, 0, 0.1)',
       },
     },

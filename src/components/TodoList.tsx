@@ -7,12 +7,12 @@ const TodoList = () => {
   const todoList = useAppSelector(state => state.todo);
 
   return (
-    <div className="mx-5">
+    <div className="mx-5 h-[calc(100vh-186px)]">
       <p className="mb-3 text-4 font-semibold text-lightGray">
         {todoList.length} Events
       </p>
       {todoList.length ? (
-        <ul>
+        <ul className="h-[calc(100vh-184px)] overflow-scroll mb-6">
           {todoList &&
             todoList.map(todo => {
               return <TodoItem key={todo.todoId} todo={todo} />;

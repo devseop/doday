@@ -1,16 +1,15 @@
 import React from 'react';
 import { Todo } from 'store/todoSlice';
-import { krYear, krMonth, krDay } from 'lib/date';
 import Badge from './Badge';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
-  const today = `${krYear}${krMonth}${krDay}`;
-  const todaysNumber = Number(today);
-  const todosNumber = Number(todo.date);
-  const result = todosNumber - todaysNumber;
-  // console.log(todo.date);
-  // console.log(todosNumber - todaysNumber);
-  console.log(result);
+  const now = new Date();
+  const todosYear = todo.date.slice(0, 4);
+  const todosMonth = todo.date.slice(4, 6);
+  const todosDay = todo.date.slice(6, 8);
+  const todosDate = new Date(`${todosYear}-${todosMonth}-${todosDay}`);
+  const daydiff = todosDate.getTime() - now.getTime();
+  const resultDay = Math.floor(daydiff / (1000 * 60 * 60 * 24));
 
   return (
     <li className="mb-4">
@@ -19,15 +18,15 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         <div className="pb-3">
           <p className="text-md font-semibold leading-4 mb-1">{todo.title}</p>
           <p className="text-[11px] font-normal leading-[11px] text-lightGray">
-            {todo.date}
+            {todosYear}.{todosMonth}.{todosDay}
           </p>
         </div>
         <p className="text-xxl font-semibold leading-[34px] mb-3">
-          {result > 0
-            ? `D-${result}`
-            : result < 0
-            ? `D+${result.toString().slice(1)}`
-            : 'D-Day'}
+          {resultDay > 0
+            ? `D-${resultDay}`
+            : resultDay === -1
+            ? 'D-Day'
+            : `D+${resultDay.toString().slice(1)}`}
         </p>
       </div>
     </li>

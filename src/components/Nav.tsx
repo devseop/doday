@@ -9,7 +9,7 @@ const BottomNav = () => {
   };
 
   return (
-    <nav className="flex justify-center items-center h-[88px] mt-6 mx-5">
+    <nav className="w-screen px-5 h-[88px] flex items-center justify-center bg-gradient-to-t from-bg via-bg to-zero">
       <button
         className="w-[44px] h-[44px] bg-black rounded-[22px] flex items-center justify-center"
         onClick={goToAddNewCard}

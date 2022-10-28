@@ -11,7 +11,47 @@ const initialState: Todo[] = [
   {
     todoId: '1',
     title: 'Do-Day MVP Deployment',
-    date: '20221120',
+    date: '20221101',
+  },
+  {
+    todoId: '2',
+    title: 'Study DEV',
+    date: '20220315',
+  },
+  {
+    todoId: '3',
+    title: 'test',
+    date: '20221028',
+  },
+  {
+    todoId: '4',
+    title: 'Do-Day MVP Deployment',
+    date: '20221101',
+  },
+  {
+    todoId: '5',
+    title: 'Study DEV',
+    date: '20220315',
+  },
+  {
+    todoId: '6',
+    title: 'test',
+    date: '20221028',
+  },
+  {
+    todoId: '7',
+    title: 'Do-Day MVP Deployment',
+    date: '20221101',
+  },
+  {
+    todoId: '8',
+    title: 'Study DEV',
+    date: '20220315',
+  },
+  {
+    todoId: '9',
+    title: 'test',
+    date: '20221028',
   },
 ];
 
