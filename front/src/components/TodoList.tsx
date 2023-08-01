@@ -1,15 +1,18 @@
 import { useRef, useState } from "react";
+import styled from "@emotion/styled";
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import EmptyTodo from "./EmptyTodo";
 
 interface ITodoListProps {
   id: number;
   text: string;
-  created: string;
+  created: object;
   isCompleted: boolean;
+  today: object;
 }
 
 dayjs.locale("ko");
@@ -18,8 +21,11 @@ dayjs.extend(relativeTime);
 const TodoList = () => {
   const [inputText, setInputText] = useState<string>("");
   const [todoList, setTodoList] = useState<ITodoListProps[]>([]);
-  const createDate = dayjs().format("YYYY년 MM월 DD일 HH:mm:ss");
-  // console.log(createDate.substring(0, 13));
+
+  // 디데이 기준일자(오늘)
+  const standardDate = dayjs();
+  const displayDate = standardDate.format("M월 D일");
+  const displayDay = standardDate.format("dddd");
 
   const nextId = useRef<number>(0);
 
@@ -32,28 +38,33 @@ const TodoList = () => {
     const newTodo: ITodoListProps = {
       id: nextId.current,
       text: inputText,
-      created: createDate,
+      created: dayjs(),
       isCompleted: false,
+      today: standardDate,
     };
-    setTodoList([newTodo, ...todoList]);
+    setTodoList([...todoList, newTodo]);
     nextId.current += 1;
     setInputText("");
-    console.log(newTodo);
   };
 
   return (
-    <>
+    <Styled.TemplateContainer>
+      <>
+        <Styled.DisplayToday>{displayDate}</Styled.DisplayToday>
+        <Styled.DisplayToday>{displayDay}</Styled.DisplayToday>
+      </>
       {todoList && todoList.length >= 1 ? (
-        <ul>
+        <Styled.TodoListContainer>
           {todoList.map((todo, index) => (
             <TodoItem
               key={todo.id}
               text={todo.text}
               created={todo.created}
               isCompleted={todo.isCompleted}
+              today={standardDate}
             />
           ))}
-        </ul>
+        </Styled.TodoListContainer>
       ) : (
         <EmptyTodo />
       )}
@@ -62,8 +73,29 @@ const TodoList = () => {
         onChange={inputTextHandler}
         onSubmit={formSubmitHandler}
       />
-    </>
+    </Styled.TemplateContainer>
   );
 };
+
+const TemplateContainer = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+  background: #e9ecef;
+`;
+
+const DisplayToday = styled.div`
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const TodoListContainer = styled.ul`
+  margin: 16px 0 0;
+  padding: 0;
+  list-style-type: none;
+`;
+
+const Styled = { TemplateContainer, DisplayToday, TodoListContainer };
 
 export default TodoList;
