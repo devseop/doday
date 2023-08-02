@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks";
-import { editTodo, removeTodo } from "../redux/todoSlice";
+import { completeTodo, editTodo, removeTodo } from "../redux/todoSlice";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -18,8 +18,6 @@ interface ITodoItemProps {
   created: object;
   isCompleted: boolean;
   today: any;
-  // onClickUpdate(updatedTodoItem: ITodoListProps): void;
-  // onClickDelete(id: number): void;
 }
 
 const TodoItem = ({
@@ -28,9 +26,7 @@ const TodoItem = ({
   created,
   isCompleted,
   today,
-}: // onClickUpdate,
-// onClickDelete,
-ITodoItemProps) => {
+}: ITodoItemProps) => {
   const dispatch = useAppDispatch();
 
   // D-Day 계산
@@ -41,29 +37,13 @@ ITodoItemProps) => {
 
   const submitUpdatedTextHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const updatedTodo = {
-    //   id: id,
-    //   text: updatedText,
-    //   created: created,
-    //   isCompleted: false,
-    //   today: today,
-    // };
-    // onClickUpdate(updatedTodo);
-    // console.log("dispatch");
     dispatch(editTodo({ id, updatedText }));
     setIsUpdate(false);
   };
 
   // 완료여부
   const changeCompleteHandler = () => {
-    const updatedTodo = {
-      id: id,
-      text: updatedText,
-      created: created,
-      isCompleted: !isCompleted,
-      today: today,
-    };
-    // onClickUpdate(updatedTodo);
+    dispatch(completeTodo({ id, isCompleted: !isCompleted }));
   };
 
   const deleteTodoHandler = (
@@ -78,7 +58,7 @@ ITodoItemProps) => {
         <li style={{ marginBottom: "16px", display: "flex" }}>
           <Styled.TodoItemContainer>
             <button onClick={changeCompleteHandler}>
-              {isCompleted ? "✔" : null}
+              {isCompleted ? "✔" : "not completed"}
             </button>
             <Styled.TodoDday>
               {calculatedDay === 0 ? "D-Day" : `D-${calculatedDay}`}

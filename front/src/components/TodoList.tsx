@@ -45,8 +45,6 @@ const TodoList = () => {
               created={todo.created}
               isCompleted={todo.isCompleted}
               today={standardDate}
-              // onClickUpdate={editTextHandler}
-              // onClickDelete={deleteTodoHandler}
             />
           ))}
         </Styled.TodoListContainer>
