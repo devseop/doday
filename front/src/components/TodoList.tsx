@@ -29,23 +29,6 @@ const TodoList = () => {
   const displayDate = standardDate.format("M월 D일");
   const displayDay = standardDate.format("dddd");
 
-  // To-do 값 수정하기
-  // const editTextHandler = (newTodo: ITodoListProps): void => {
-  //   const newTodoList = todoList.map((todo) => {
-  //     if (todo.id === newTodo.id) {
-  //       return newTodo;
-  //     } else {
-  //       return todo;
-  //     }
-  //   });
-  //   setTodoList(newTodoList);
-  // };
-
-  // To-do 삭제하기
-  // const deleteTodoHandler = (id: number) => {
-  //   setTodoList(todoList.filter((item) => item.id !== id));
-  // };
-
   return (
     <Styled.TemplateContainer>
       <>

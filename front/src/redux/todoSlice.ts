@@ -12,7 +12,6 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action: PayloadAction<string>) => {
-      // console.log("addTodo");
       state.push({
         id: nextId,
         text: action.payload,
@@ -23,6 +22,16 @@ export const todoSlice = createSlice({
       nextId++;
     },
 
+    editTodo: (state, action: PayloadAction<any>) => {
+      const { id, updatedText } = action.payload;
+
+      /** [오류] TS2532: Object is possibly 'undefined' 를 없애기 위한 if 구문 활용.*/
+      const targetTodo = state.find((todo) => todo.id === id);
+      if (targetTodo) {
+        targetTodo.text = updatedText;
+      }
+    },
+
     removeTodo: (state, action: PayloadAction<number>) => {
       const idx = state.findIndex((todo) => todo.id === action.payload);
       state.splice(idx, 1);
@@ -30,5 +39,5 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, removeTodo } = todoSlice.actions;
+export const { addTodo, editTodo, removeTodo } = todoSlice.actions;
 export default todoSlice.reducer;

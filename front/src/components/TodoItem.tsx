@@ -4,9 +4,9 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
-import { ITodoListProps } from "./TodoList";
 import { useState } from "react";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch } from "../hooks";
+import { editTodo, removeTodo } from "../redux/todoSlice";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -31,6 +31,8 @@ const TodoItem = ({
 }: // onClickUpdate,
 // onClickDelete,
 ITodoItemProps) => {
+  const dispatch = useAppDispatch();
+
   // D-Day 계산
   const calculatedDay = dayjs.duration(today.diff(created)).days();
 
@@ -39,14 +41,16 @@ ITodoItemProps) => {
 
   const submitUpdatedTextHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedTodo = {
-      id: id,
-      text: updatedText,
-      created: created,
-      isCompleted: false,
-      today: today,
-    };
+    // const updatedTodo = {
+    //   id: id,
+    //   text: updatedText,
+    //   created: created,
+    //   isCompleted: false,
+    //   today: today,
+    // };
     // onClickUpdate(updatedTodo);
+    // console.log("dispatch");
+    dispatch(editTodo({ id, updatedText }));
     setIsUpdate(false);
   };
 
@@ -60,6 +64,12 @@ ITodoItemProps) => {
       today: today,
     };
     // onClickUpdate(updatedTodo);
+  };
+
+  const deleteTodoHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    dispatch(removeTodo(id));
   };
 
   return (
@@ -76,7 +86,7 @@ ITodoItemProps) => {
             <Styled.TodoText>{text}</Styled.TodoText>
             <div>
               <button onClick={() => setIsUpdate(true)}>수정</button>
-              {/* <button onClick={() => onClickDelete(id)}>삭제</button> */}
+              <button onClick={deleteTodoHandler}>삭제</button>
             </div>
           </Styled.TodoItemContainer>
         </li>
