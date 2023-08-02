@@ -1,13 +1,15 @@
 import { useRef, useState } from "react";
 import styled from "@emotion/styled";
-import TodoItem from "./TodoItem";
-import TodoForm from "./TodoForm";
+
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
+
+import TodoItem from "./TodoItem";
+import TodoForm from "./TodoForm";
 import EmptyTodo from "./EmptyTodo";
 
-interface ITodoListProps {
+export interface ITodoListProps {
   id: number;
   text: string;
   created: object;
@@ -33,6 +35,7 @@ const TodoList = () => {
     setInputText(e.target.value);
   };
 
+  // To-Do 제출하기
   const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo: ITodoListProps = {
@@ -47,6 +50,23 @@ const TodoList = () => {
     setInputText("");
   };
 
+  // To-do 값 수정하기
+  const editTextHandler = (newTodo: ITodoListProps): void => {
+    const newTodoList = todoList.map((todo) => {
+      if (todo.id === newTodo.id) {
+        return newTodo;
+      } else {
+        return todo;
+      }
+    });
+    setTodoList(newTodoList);
+  };
+
+  // To-do 삭제하기
+  const deleteTodoHandler = (id: number) => {
+    setTodoList(todoList.filter((item) => item.id !== id));
+  };
+
   return (
     <Styled.TemplateContainer>
       <>
@@ -58,10 +78,13 @@ const TodoList = () => {
           {todoList.map((todo, index) => (
             <TodoItem
               key={todo.id}
+              id={todo.id}
               text={todo.text}
               created={todo.created}
               isCompleted={todo.isCompleted}
               today={standardDate}
+              onClickUpdate={editTextHandler}
+              onClickDelete={deleteTodoHandler}
             />
           ))}
         </Styled.TodoListContainer>

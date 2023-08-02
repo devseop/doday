@@ -1,39 +1,102 @@
 import styled from "@emotion/styled";
 
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
-
-interface ITodoItemProps {
-  text: string;
-  created: object;
-  isCompleted: boolean;
-  today: any;
-}
+import { ITodoListProps } from "./TodoList";
+import { useState } from "react";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
-const TodoItem = ({ text, created, isCompleted, today }: ITodoItemProps) => {
+interface ITodoItemProps {
+  id: number;
+  text: string;
+  created: object;
+  isCompleted: boolean;
+  today: any;
+  onClickUpdate(updatedTodoItem: ITodoListProps): void;
+  onClickDelete(id: number): void;
+}
+
+const TodoItem = ({
+  id,
+  text,
+  created,
+  isCompleted,
+  today,
+  onClickUpdate,
+  onClickDelete,
+}: ITodoItemProps) => {
   // D-Day 계산
   const calculatedDay = dayjs.duration(today.diff(created)).days();
 
-  return (
-    <li style={{ marginBottom: "16px", display: "flex" }}>
-      {/* {isCompleted ? <div>완료됨</div> : <div>진행중</div>} */}
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [updatedText, setUpdatedText] = useState<string>(text);
 
-      <Styled.TodoItemContainer>
-        <Styled.TodoDday>
-          {calculatedDay === 0 ? "D-Day" : `D-${calculatedDay}`}
-        </Styled.TodoDday>
-        <Styled.TodoText>{text}</Styled.TodoText>
-        {/* <div>
-          <button>수정</button>
-          <button>삭제</button>
-        </div> */}
-      </Styled.TodoItemContainer>
-    </li>
+  const submitUpdatedTextHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const updatedTodo = {
+      id: id,
+      text: updatedText,
+      created: created,
+      isCompleted: false,
+      today: today,
+    };
+    onClickUpdate(updatedTodo);
+    setIsUpdate(false);
+  };
+
+  // 완료여부
+  const changeCompleteHandler = () => {
+    const updatedTodo = {
+      id: id,
+      text: updatedText,
+      created: created,
+      isCompleted: !isCompleted,
+      today: today,
+    };
+    onClickUpdate(updatedTodo);
+  };
+
+  return (
+    <>
+      {!isUpdate ? (
+        <li style={{ marginBottom: "16px", display: "flex" }}>
+          <Styled.TodoItemContainer>
+            <button onClick={changeCompleteHandler}>
+              {isCompleted ? "✔" : null}
+            </button>
+            <Styled.TodoDday>
+              {calculatedDay === 0 ? "D-Day" : `D-${calculatedDay}`}
+            </Styled.TodoDday>
+            <Styled.TodoText>{text}</Styled.TodoText>
+            <div>
+              <button onClick={() => setIsUpdate(true)}>수정</button>
+              <button onClick={() => onClickDelete(id)}>삭제</button>
+            </div>
+          </Styled.TodoItemContainer>
+        </li>
+      ) : (
+        <li style={{ marginBottom: "16px", display: "flex" }}>
+          <Styled.TodoItemContainer>
+            <form onSubmit={submitUpdatedTextHandler}>
+              <input
+                type="text"
+                value={updatedText}
+                onChange={(e) => setUpdatedText(e.target.value)}
+              />
+              <div>
+                <button type="submit">확인</button>
+                <button onClick={() => setIsUpdate(false)}>취소</button>
+              </div>
+            </form>
+          </Styled.TodoItemContainer>
+        </li>
+      )}
+    </>
   );
 };
 
