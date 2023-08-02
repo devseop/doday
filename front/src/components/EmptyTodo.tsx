@@ -13,7 +13,7 @@ const EmptyTodo = () => {
 };
 
 const EmptyTodoContainer = styled.div`
-  margin: auto 0;
+  margin: 50% 0;
   text-align: center;
 `;
 

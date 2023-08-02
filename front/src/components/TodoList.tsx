@@ -1,4 +1,3 @@
-import { useRef, useState } from "react";
 import styled from "@emotion/styled";
 
 import dayjs from "dayjs";
@@ -8,6 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
 import EmptyTodo from "./EmptyTodo";
+import { useAppSelector } from "../hooks";
 
 export interface ITodoListProps {
   id: number;
@@ -20,52 +20,31 @@ export interface ITodoListProps {
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
+export const standardDate = dayjs();
+
 const TodoList = () => {
-  const [inputText, setInputText] = useState<string>("");
-  const [todoList, setTodoList] = useState<ITodoListProps[]>([]);
+  const todoList = useAppSelector((state) => state.todo);
 
   // 디데이 기준일자(오늘)
-  const standardDate = dayjs();
   const displayDate = standardDate.format("M월 D일");
   const displayDay = standardDate.format("dddd");
 
-  const nextId = useRef<number>(0);
-
-  const inputTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value);
-  };
-
-  // To-Do 제출하기
-  const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newTodo: ITodoListProps = {
-      id: nextId.current,
-      text: inputText,
-      created: dayjs(),
-      isCompleted: false,
-      today: standardDate,
-    };
-    setTodoList([...todoList, newTodo]);
-    nextId.current += 1;
-    setInputText("");
-  };
-
   // To-do 값 수정하기
-  const editTextHandler = (newTodo: ITodoListProps): void => {
-    const newTodoList = todoList.map((todo) => {
-      if (todo.id === newTodo.id) {
-        return newTodo;
-      } else {
-        return todo;
-      }
-    });
-    setTodoList(newTodoList);
-  };
+  // const editTextHandler = (newTodo: ITodoListProps): void => {
+  //   const newTodoList = todoList.map((todo) => {
+  //     if (todo.id === newTodo.id) {
+  //       return newTodo;
+  //     } else {
+  //       return todo;
+  //     }
+  //   });
+  //   setTodoList(newTodoList);
+  // };
 
   // To-do 삭제하기
-  const deleteTodoHandler = (id: number) => {
-    setTodoList(todoList.filter((item) => item.id !== id));
-  };
+  // const deleteTodoHandler = (id: number) => {
+  //   setTodoList(todoList.filter((item) => item.id !== id));
+  // };
 
   return (
     <Styled.TemplateContainer>
@@ -75,7 +54,7 @@ const TodoList = () => {
       </>
       {todoList && todoList.length >= 1 ? (
         <Styled.TodoListContainer>
-          {todoList.map((todo, index) => (
+          {todoList.map((todo) => (
             <TodoItem
               key={todo.id}
               id={todo.id}
@@ -83,19 +62,15 @@ const TodoList = () => {
               created={todo.created}
               isCompleted={todo.isCompleted}
               today={standardDate}
-              onClickUpdate={editTextHandler}
-              onClickDelete={deleteTodoHandler}
+              // onClickUpdate={editTextHandler}
+              // onClickDelete={deleteTodoHandler}
             />
           ))}
         </Styled.TodoListContainer>
       ) : (
         <EmptyTodo />
       )}
-      <TodoForm
-        inputText={inputText}
-        onChange={inputTextHandler}
-        onSubmit={formSubmitHandler}
-      />
+      <TodoForm />
     </Styled.TemplateContainer>
   );
 };

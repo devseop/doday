@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
 import { ITodoListProps } from "./TodoList";
 import { useState } from "react";
+import { useAppSelector } from "../hooks";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -17,8 +18,8 @@ interface ITodoItemProps {
   created: object;
   isCompleted: boolean;
   today: any;
-  onClickUpdate(updatedTodoItem: ITodoListProps): void;
-  onClickDelete(id: number): void;
+  // onClickUpdate(updatedTodoItem: ITodoListProps): void;
+  // onClickDelete(id: number): void;
 }
 
 const TodoItem = ({
@@ -27,9 +28,9 @@ const TodoItem = ({
   created,
   isCompleted,
   today,
-  onClickUpdate,
-  onClickDelete,
-}: ITodoItemProps) => {
+}: // onClickUpdate,
+// onClickDelete,
+ITodoItemProps) => {
   // D-Day 계산
   const calculatedDay = dayjs.duration(today.diff(created)).days();
 
@@ -45,7 +46,7 @@ const TodoItem = ({
       isCompleted: false,
       today: today,
     };
-    onClickUpdate(updatedTodo);
+    // onClickUpdate(updatedTodo);
     setIsUpdate(false);
   };
 
@@ -58,7 +59,7 @@ const TodoItem = ({
       isCompleted: !isCompleted,
       today: today,
     };
-    onClickUpdate(updatedTodo);
+    // onClickUpdate(updatedTodo);
   };
 
   return (
@@ -75,7 +76,7 @@ const TodoItem = ({
             <Styled.TodoText>{text}</Styled.TodoText>
             <div>
               <button onClick={() => setIsUpdate(true)}>수정</button>
-              <button onClick={() => onClickDelete(id)}>삭제</button>
+              {/* <button onClick={() => onClickDelete(id)}>삭제</button> */}
             </div>
           </Styled.TodoItemContainer>
         </li>
