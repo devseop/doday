@@ -21,6 +21,7 @@ const EmptyText = styled.p`
   white-space: pre-wrap;
   font-weight: 500;
   line-height: 1.5;
+  color: #fff;
 `;
 
 const Styled = { EmptyTodoContainer, EmptyText };

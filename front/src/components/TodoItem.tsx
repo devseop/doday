@@ -57,16 +57,23 @@ const TodoItem = ({
       {!isUpdate ? (
         <li style={{ marginBottom: "16px", display: "flex" }}>
           <Styled.TodoItemContainer>
-            <button onClick={changeCompleteHandler}>
-              {isCompleted ? "✔" : "not completed"}
-            </button>
-            <Styled.TodoDday>
-              {calculatedDay === 0 ? "D-Day" : `D-${calculatedDay}`}
-            </Styled.TodoDday>
-            <Styled.TodoText>{text}</Styled.TodoText>
+            <Styled.TodoHeader>
+              <Styled.TodoDday>
+                {calculatedDay === 0 ? "D-Day" : `D-${calculatedDay}`}
+              </Styled.TodoDday>
+              <Styled.CompleteButton
+                onClick={changeCompleteHandler}
+                isCompleted={isCompleted}
+              >
+                ✔ {/* {isCompleted ? "✔" : "✔"} */}
+              </Styled.CompleteButton>
+            </Styled.TodoHeader>
+            <Styled.TodoText isCompleted={isCompleted}>{text}</Styled.TodoText>
             <div>
-              <button onClick={() => setIsUpdate(true)}>수정</button>
-              <button onClick={deleteTodoHandler}>삭제</button>
+              <Styled.Button onClick={() => setIsUpdate(true)}>
+                수정
+              </Styled.Button>
+              <Styled.Button onClick={deleteTodoHandler}>삭제</Styled.Button>
             </div>
           </Styled.TodoItemContainer>
         </li>
@@ -80,8 +87,10 @@ const TodoItem = ({
                 onChange={(e) => setUpdatedText(e.target.value)}
               />
               <div>
-                <button type="submit">확인</button>
-                <button onClick={() => setIsUpdate(false)}>취소</button>
+                <Styled.Button type="submit">확인</Styled.Button>
+                <Styled.Button onClick={() => setIsUpdate(false)}>
+                  취소
+                </Styled.Button>
               </div>
             </form>
           </Styled.TodoItemContainer>
@@ -99,28 +108,57 @@ const TodoItemContainer = styled.div`
   padding: 16px;
 
   /* style */
-  border-radius: 8px;
+  border-radius: 24px;
   background-color: #fff;
 `;
 
-const TodoDday = styled.p`
-  margin: 0 0 12px 0;
-  font-size: 24px;
-  font-weight: 700;
+const TodoHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 `;
 
-const TodoText = styled.p`
+const CompleteButton = styled.button<{ isCompleted: boolean }>`
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  background-color: ${(props) =>
+    props.isCompleted === true ? "#222222" : "rgba(0,0,0,0.1)"};
+  color: ${(props) =>
+    props.isCompleted === true ? "#ffffff" : "rgba(0,0,0,0.4)"};
+`;
+
+const TodoDday = styled.p`
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+`;
+
+const TodoText = styled.p<{ isCompleted: boolean }>`
   margin: 0;
   word-break: keep-all;
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(34, 34, 34, 0.8);
+  font-size: 24px;
+  font-weight: 400;
+  color: #000;
+  text-decoration: ${(props) =>
+    props.isCompleted === true ? "line-through" : ""};
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.3);
 `;
 
 const Styled = {
   TodoItemContainer,
+  TodoHeader,
+  CompleteButton,
   TodoDday,
   TodoText,
+  Button,
 };
 
 export default TodoItem;

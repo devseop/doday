@@ -59,10 +59,6 @@ const TodoInput = styled.input`
   border-radius: 8px;
   background: #ffffff;
   outline: none;
-
-  :focus {
-    border-color: #2e6afe;
-  }
 `;
 
 const Styled = { TodoFormContainer, TodoInput };

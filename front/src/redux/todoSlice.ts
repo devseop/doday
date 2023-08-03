@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ITodoListProps } from "../components/TodoList";
 import dayjs from "dayjs";
 import { standardDate } from "../components/TodoList";
+import { ITodoItemProps } from "../components/TodoForm";
 
 let nextId = 0;
-const initialState = [] as ITodoListProps[];
 
 export const todoSlice = createSlice({
   name: "todos",
-  initialState,
+  initialState: [] as ITodoItemProps[],
   reducers: {
     addTodo: (state, action: PayloadAction<string>) => {
       state.push({

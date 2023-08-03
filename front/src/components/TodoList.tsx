@@ -61,12 +61,13 @@ const TemplateContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 40px);
-  background: #e9ecef;
+  background: #23232c;
 `;
 
 const DisplayToday = styled.div`
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 400;
+  color: #fff;
 `;
 
 const TodoListContainer = styled.ul`
